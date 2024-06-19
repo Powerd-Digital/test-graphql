@@ -1,9 +1,21 @@
 import Image from "next/image";
 import { Inter } from "next/font/google";
+import { useEffect } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  useEffect(() => {
+    fetch("api/graphql", {
+      headers: {
+        "content-type": "application/json",
+      },
+      body: '{"query":"{\\n  hello\\n}","variables":{}}',
+      method: "POST",
+    })
+      .then((res) => res.json())
+      .then((res) => alert(JSON.stringify(res)));
+  }, []);
   return (
     <main
       className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
