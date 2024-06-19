@@ -1,6 +1,7 @@
 import { ApolloServer } from "@apollo/server";
 import { startServerAndCreateNextHandler } from "@as-integrations/next";
 import { gql } from "graphql-tag";
+import { NextApiRequest, NextApiResponse } from "next";
 
 const resolvers = {
   Query: {
@@ -19,4 +20,9 @@ const server = new ApolloServer({
   typeDefs,
 });
 
-export default startServerAndCreateNextHandler(server);
+export default async function handle(
+  req: NextApiRequest,
+  res: NextApiResponse,
+) {
+  return startServerAndCreateNextHandler(server)(req, res);
+}
